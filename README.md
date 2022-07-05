@@ -7,6 +7,8 @@ Non-profit DAO consists of:
 - [**SBRTManager**](./src/SBRTManager.sol)
 - [**GovernorNPO**](./src/GovernorNPO.sol)
 
-### **SBRT example**
+**SBRT (Soulbound Reputation Token) example**
 
-![SBRTexample](./sampleSBRT.svg)
+<p align="center">
+  <img width="550" src="./sampleSBRT.svg">
+</p>
