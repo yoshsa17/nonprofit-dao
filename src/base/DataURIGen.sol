@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  * @title DataURI Generation contract
  *
  * @dev This contract helps to generate DataURIs(SVG data) for SBRTs.
- * NOTE: This design heabily borrows from the Uniswap V3 Non-Fungible Position token.
+ * NOTE: This design borrows heavily from the Uniswap V3 Non-Fungible Position token.
  */
 contract DataURIGen {
     using Strings for address;
