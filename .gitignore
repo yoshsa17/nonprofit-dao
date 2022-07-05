@@ -1,2 +1,6 @@
 cache/
 out/
+node_modules/
+.idea/
+.vscode/
+.env

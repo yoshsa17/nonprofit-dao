@@ -1,0 +1,60 @@
+<svg
+  class="svgBody"
+  width="300"
+  height="185"
+  viewBox="0 0 300 185"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="0" y2="100%">
+      <stop
+        offset="0%"
+        style="stop-color: hsl(129, 40%, 50%); stop-opacity: 1"
+      />
+      <stop offset="100%" style="stop-color: light" />
+    </linearGradient>
+  </defs>
+  <rect width="300" height="185" rx="10" fill="url(#gradient)" />
+  <rect width="300" height="185" rx="10" style="fill: black" opacity="0.3" />
+  <rect
+    x="5"
+    y="5"
+    width="290"
+    height="175"
+    rx="10"
+    fill="transparent"
+    stroke="white"
+    opacity="0.8"
+  />
+  <rect x="14" y="170" rx="3" width="40" height="13" fill="black" />
+  <text x="20" y="30" class="tiny" fill="white">Nonprofit DAO</text>
+  <text x="20" y="40" class="small" fill="white">
+    0x823892589523c890b909a90f9d978dda98373489
+  </text>
+  <text x="20" y="50" class="tiny" fill="white">
+    Accepted by: 0x646db8ffc21e7ddc273927448dd9fa560df94887
+  </text>
+  <text x="20" y="60" class="tiny" fill="white">
+    Roles: FRONTEND_DEV FRONTEND_DEV_RECRUITER
+  </text>
+  <text x="20" y="70" class="tiny" fill="white">Status: ACTIVE</text>
+  <text x="20" y="90" class="tiny" fill="white">Reputation: 43</text>
+  <text x="20" y="100" class="tiny" fill="white">Evaluation: 23</text>
+  <text x="20" y="110" class="tiny" fill="white">Voting: 43</text>
+  <text x="20" y="120" class="tiny" fill="white">Propsal: 11</text>
+  <text x="17" y="181" class="small" fill="white">#32112</text>
+  <text x="180" y="170" class="tiny" fill="white">
+    Updated tiemstamp: 1657011291
+  </text>
+  <style>
+    .svgBody {
+      font-family: "Courier New";
+    }
+    .tiny {
+      font-size: 6px;
+    }
+    .small {
+      font-size: 10px;
+    }
+  </style>
+</svg>
