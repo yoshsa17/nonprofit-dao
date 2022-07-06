@@ -26,13 +26,13 @@
     stroke="white"
     opacity="0.8"
   />
-  <rect x="14" y="170" rx="3" width="40" height="13" fill="black" />
+  <rect x="14" y="170" rx="3" width="42" height="13" fill="black" />
   <text x="20" y="30" class="tiny" fill="white">Nonprofit DAO</text>
   <text x="20" y="40" class="small" fill="white">
-    0x823892589523c890b909a90f9d978dda98373489
+    0x78506C74dD823855fA9F8eD9c811ABb39FD48342
   </text>
   <text x="20" y="50" class="tiny" fill="white">
-    Accepted by: 0x646db8ffc21e7ddc273927448dd9fa560df94887
+    Accepted by: 0x78506C74dD823855fA9F8eD9c811ABb39FD48342
   </text>
   <text x="20" y="60" class="tiny" fill="white">
     Roles: FRONTEND_DEV FRONTEND_DEV_RECRUITER
@@ -41,8 +41,8 @@
   <text x="20" y="90" class="tiny" fill="white">Reputation: 43</text>
   <text x="20" y="100" class="tiny" fill="white">Evaluation: 23</text>
   <text x="20" y="110" class="tiny" fill="white">Voting: 43</text>
-  <text x="20" y="120" class="tiny" fill="white">Propsal: 11</text>
-  <text x="17" y="181" class="small" fill="white">#32112</text>
+  <text x="20" y="120" class="tiny" fill="white">Proposal Submission: 11</text>
+  <text x="17" y="182" class="small" fill="white">#32112</text>
   <text x="180" y="170" class="tiny" fill="white">
     Updated tiemstamp: 1657011291
   </text>

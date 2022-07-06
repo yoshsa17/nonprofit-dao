@@ -85,7 +85,7 @@ contract DataURIGen {
                     ' <rect width="300" height="185" rx="10" fill="url(#gradient)" />',
                     ' <rect width="300" height="185" rx="10" style="fill: black" opacity="0.3"/>',
                     ' <rect x="5" y="5" width="290" height="175" rx="10" fill="transparent" stroke="white" opacity="0.8" />',
-                    ' <rect x="14" y="170" rx="3" width="40" height="13" fill="black"  />'
+                    ' <rect x="14" y="170" rx="3" width="42" height="13" fill="black"  />'
                 )
             );
     }
@@ -163,7 +163,7 @@ contract DataURIGen {
                     '<text x="20" y="110" class="tiny" fill="white" >Voting: ',
                     votingCount.toString(),
                     "</text>",
-                    '<text x="20" y="120" class="tiny" fill="white" >Propsal: ',
+                    '<text x="20" y="120" class="tiny" fill="white" >Proposal Submission: ',
                     proposalCount.toString(),
                     "</text>"
                 )
@@ -177,7 +177,7 @@ contract DataURIGen {
         return
             string(
                 abi.encodePacked(
-                    '<text x="17" y="181" class="small" fill="white" ># ',
+                    '<text x="17" y="182" class="small" fill="white" ># ',
                     tokenId.toString(),
                     "</text>",
                     '<text x="180" y="170" class="tiny" fill="white" >Updated tiemstamp: ',

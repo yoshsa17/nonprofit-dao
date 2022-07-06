@@ -12,11 +12,11 @@ interface ITreasuryWallet {
 
     function getWalletBalance() external view returns (uint256);
 
-    function getDomainAllownance(bytes32 domainId) external view returns (uint256);
+    function getDomainAllowance(bytes32 domainId) external view returns (uint256);
 
     function checkDomainAllowance(bytes32 domainId, uint256[] memory values) external view returns (bool);
 
     function approveToDomain(bytes32 domainId, uint256 amount) external;
 
-    function revokeDomainAllownance(bytes32 domainId) external;
+    function revokeDomainAllowance(bytes32 domainId) external;
 }

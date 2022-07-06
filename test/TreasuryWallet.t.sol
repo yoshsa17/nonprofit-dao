@@ -30,7 +30,7 @@ contract TreasuryWalletTest is Test {
     function testApproveFunds() public {
         vm.prank(address(governor));
         governor.approveToDomain(DOMAIN_ID, 1 ether);
-        assertEq(governor.getDomainAllownance(DOMAIN_ID), 1 ether);
+        assertEq(governor.getDomainAllowance(DOMAIN_ID), 1 ether);
     }
 
     function testCheckDomainAllowanance() public {
