@@ -27,6 +27,7 @@ contract GovernorNPOFixture is Test {
     MockTarget public mockTarget;
 
     function setUp() public virtual {
+        vm.warp(1657085759);
         mockTarget = new MockTarget();
         governor = new GovernorNPO();
         manager = new SBRTManager(address(governor), "DOMAIN_1", "DOMAIN_1_ADMIN", members);
@@ -49,10 +50,6 @@ contract VotingTest is GovernorNPOFixture {
     string description = "Proposal #1: test description";
     bytes32 descriptionHash = bytes32(keccak256(abi.encodePacked(description)));
     uint256 proposalId;
-
-    function proposeInDomain() public {}
-
-    function propose() public {}
 
     function setUp() public override {
         super.setUp();
