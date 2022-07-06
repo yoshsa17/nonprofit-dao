@@ -16,7 +16,8 @@ import "./AccessControlPlus.sol";
  *      This contract manages SRBTs and its attributes + Role based access control.
  */
 contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
-    uint256 public constant REPUTATION_VALID_PERIOD = 60 * 60 * 24 * 7 * 4; // 1 month
+    uint256 public constant REPUTATION_VALID_DURATION = 4 weeks; // 4 weeks
+    uint256 public constant ACTIVE_STATUS_VALID_DURATION = 365 days; // 1 year
     uint256 public constant REPUTAIION_INITIAL_WEIGHT = 100;
     uint256 public constant EVALUATION_INITIAL_WEIGHT = 10;
     uint256 public constant PROPOSAL_INIRIAL_WEIGHT = 10;
@@ -69,7 +70,8 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
         Attribute storage a = _attributes[tokenId];
         address owner = ownerOf(tokenId);
         string[] memory roles = getGrantedRoles(owner);
-        string memory status = a.updatedAt + REPUTATION_VALID_PERIOD > block.timestamp ? "ACTIVE" : "INACTIVE";
+        // TODO: refactor it to manage Active status in each domain
+        string memory status = a.updatedAt + ACTIVE_STATUS_VALID_DURATION > block.timestamp ? "ACTIVE" : "INACTIVE";
 
         return
             getDataURI(
@@ -145,7 +147,8 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
         require(getMemberRoleCount(member) > 0, "account is not a member of any role");
         uint256 tokenId = tokenOfOwnerByIndex(member, 0);
         Attribute storage a = _attributes[tokenId];
-        return a.updatedAt + REPUTATION_VALID_PERIOD > block.timestamp ? MemberStatus.ACTIVE : MemberStatus.INACTIVE;
+        return
+            a.updatedAt + ACTIVE_STATUS_VALID_DURATION > block.timestamp ? MemberStatus.ACTIVE : MemberStatus.INACTIVE;
     }
 
     // -------------------------------------------------------------------------
@@ -369,7 +372,10 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
      */
     function _findValidReputationIndex(uint256 tokenId) internal view returns (uint256) {
         ReputationDetail[] storage array = _attributes[tokenId].reputations;
-        uint256 current = block.timestamp;
+        uint256 base;
+        unchecked {
+            base = block.timestamp - REPUTATION_VALID_DURATION;
+        }
 
         if (array.length == 0) {
             return 0;
@@ -379,14 +385,14 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
 
         while (low < high) {
             uint256 mid = Math.average(low, high);
-            if (array[mid].createdAt > current) {
+            if (array[mid].createdAt > base) {
                 high = mid;
             } else {
                 low = mid + 1;
             }
         }
 
-        if (low > 0 && array[low - 1].createdAt == current) {
+        if (low > 0 && array[low - 1].createdAt == base) {
             return low - 1;
         } else {
             return low;
