@@ -45,10 +45,12 @@ contract TreasuryWallet is ITreasuryWallet, Context {
     function approveToDomain(bytes32 domainId, uint256 amount) external {
         require(_msgSender() == address(this), "TreasuryWallet: only owner can approve funds");
         _domainAllowances[domainId] = amount;
+        emit ApprovedToDomain(domainId, amount);
     }
 
     function revokeDomainAllowance(bytes32 domainId) external {
         require(_msgSender() == address(this), "TreasuryWallet: only owner can revoke funds");
         _domainAllowances[domainId] = 0;
+        emit RevokedDomainAllowance(domainId);
     }
 }
