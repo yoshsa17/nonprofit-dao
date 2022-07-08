@@ -18,17 +18,13 @@ contract DeployContracts is Script {
     function setUp() public {}
 
     function run() public {
+        vm.startBroadcast();
         // deploy governorNPO
-        vm.startBroadcast();
         GovernorNPO governor = new GovernorNPO();
-        vm.stopBroadcast();
-
         // deploy SBRTManager
-        vm.startBroadcast();
         SBRTManager manager = new SBRTManager(address(governor), initialDomain, initialAdminDomain, members);
-        vm.stopBroadcast();
-
-        // initialize governorNPO with the manager address
+        // init governorNPO with SBRTManager address
         governor.init(address(manager));
+        vm.stopBroadcast();
     }
 }
