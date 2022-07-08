@@ -329,6 +329,7 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
             // grant admin role to each member
             _grantRole(adminRoleId, members[i]);
         }
+        emit AddedNewRole(roleName, adminRoleName, roleId, adminRoleId, members);
     }
 
     /**
