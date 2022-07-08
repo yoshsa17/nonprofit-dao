@@ -9,7 +9,7 @@ pragma solidity ^0.8.13;
  *       ref: https://docs.openzeppelin.com/contracts/4.x/api/access#IAccessControl
  */
 interface IAccessControlPlus {
-    event AddedNewRole(string role, string adminRole, address[] InitialMembers);
+    event AddedNewRole(string role, string adminRole, bytes32 roleId, bytes32 adminRoleId, address[] initialMembers);
 
     event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole);
 
