@@ -9,17 +9,23 @@ pragma solidity ^0.8.13;
  *       ref: https://docs.openzeppelin.com/contracts/4.x/api/access#IAccessControl
  */
 interface IAccessControlPlus {
-    event AddedNewRole(string role, string adminRole, bytes32 roleId, bytes32 adminRoleId, address[] initialMembers);
+    event AddedNewRole(
+        string roleName,
+        string adminRoleName,
+        bytes32 roleId,
+        bytes32 adminRoleId,
+        address[] initialMembers
+    );
 
-    event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole);
+    event RoleAdminChanged(bytes32 indexed roleId, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole);
 
-    event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);
+    event RoleGranted(bytes32 indexed roleId, address indexed account, address indexed from);
 
-    event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender);
+    event RoleRevoked(bytes32 indexed roleId, address indexed account, address indexed from);
 
-    function hasRole(bytes32 role, address account) external view returns (bool);
+    function hasRole(bytes32 roleId, address account) external view returns (bool);
 
-    function getRoleAdmin(bytes32 role) external view returns (bytes32);
+    function getRoleAdmin(bytes32 roleId) external view returns (bytes32);
 
     function getRoleName(bytes32 roleId) external view returns (string memory);
 
