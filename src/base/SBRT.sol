@@ -54,7 +54,7 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
         string memory initialAdminRoleName_,
         address[] memory initialMembers_
     ) SBT721("Soulbound Reputation Token", "SBRT") {
-        _grantRole(GOVERNOR, governor_);
+        _setUp(GOVERNOR, governor_);
         _addNewRole(initialRoleName_, initialAdminRoleName_, initialMembers_);
     }
 
@@ -241,13 +241,13 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
         uint256 roundId,
         string memory reason
     ) internal {
-        // grant role to 'to' address
-        _grantRole(domainId, to);
         // mint a new SBRT and append an initial reputation to
         uint256 tokenId = totalSupply() + 1;
-
         _mint(to, tokenId);
         _initAttribute(tokenId, from, to, domainId, roundId, reason);
+
+        // grant role to 'to' address
+        _grantRole(domainId, to);
     }
 
     /**
@@ -323,8 +323,8 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
             if (balanceOf(members[i]) == 0) {
                 _mintSBRT(_msgSender(), members[i], roleId, 0, "Initial Memeber");
             } else {
-                _grantRole(roleId, members[i]);
                 _addReputationToSBRT(_msgSender(), members[i], roleId, 0, "Initial Member");
+                _grantRole(roleId, members[i]);
             }
             // grant admin role to each member
             _grantRole(adminRoleId, members[i]);

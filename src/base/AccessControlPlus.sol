@@ -164,6 +164,14 @@ contract AccessControlPlus is Context, IAccessControlPlus {
     }
 
     /**
+     * @dev Adds a address to '_role'
+     *      This function is intended to be used to set unique roles like governor role.
+     */
+    function _setUp(bytes32 role, address account) internal virtual {
+        _roles[role].members[account] = true;
+    }
+
+    /**
      * @dev Adds an account to '_role' and adds the given role to member's role list
      */
     function _grantRole(bytes32 role, address account) internal virtual {
