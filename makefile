@@ -19,8 +19,8 @@ setup-npm :; npm install
 # test
 tests :; forge clean && forge test --optimize --optimizer-runs 1000000 -vvvv
 
-# deployment
-local-node :; anvil --block-time 13 --mnemonic 'test test test test test test test test test test test rabbit'
+# deployment 
+local-node :; anvil --block-time 13 --host 0.0.0.0 --mnemonic 'test test test test test test test test test test test rabbit'
 
-deploy :; forge script script/deploy.s.sol:DeployContracts --rpc-url http://localhost:8545  \
-    --private-key 0xb2fcc1d62f49bbb286835fe809c5644860229ed5beef6ee9fea090bf88601b57 --broadcast
+deploy :; forge script script/deploy.s.sol:DeployContracts --fork-url http://localhost:8545  \
+    --private-key 0xb2fcc1d62f49bbb286835fe809c5644860229ed5beef6ee9fea090bf88601b57 --broadcast -vvvv
