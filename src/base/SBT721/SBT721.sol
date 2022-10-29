@@ -76,13 +76,17 @@ contract SBT721 is ISBT721, ISBT721Metadata {
         require(_exists(tokenId), "SBT: invalid token id");
     }
 
-    function _mint(address to, uint256 tokenId) internal virtual {
+    function _mint(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual {
         require(to != address(0), "SBT:  zero address");
         require(!_exists(tokenId), "SBT: token already minted");
         _beforeTokenMintOrBurn(address(0), to, tokenId);
         _balances[to] += 1;
         _owners[tokenId] = to;
-        emit Minted(address(0), to, tokenId);
+        emit Minted(from, to, tokenId);
         _afterTokenMintOrBurn(address(0), to, tokenId);
     }
 

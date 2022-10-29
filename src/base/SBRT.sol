@@ -217,7 +217,9 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
         // then grant a new role and add a reputation to the SBRT
         else if (!hasRole(domainId, to)) {
             // Only the admin of the domain can grant its role.
-            require(hasRole(getRoleAdmin(domainId), from), "SBRT: from address is not a member of the admin role");
+            if (domainId != bytes32(0x00)) {
+                require(hasRole(getRoleAdmin(domainId), from), "SBRT: from address is not a member of the admin role");
+            }
             _grantRole(domainId, to);
             _addReputationToSBRT(from, to, domainId, roundId, reason);
         }
@@ -242,8 +244,8 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
         string memory reason
     ) internal {
         // mint a new SBRT and append an initial reputation to
-        uint256 tokenId = totalSupply() + 1;
-        _mint(to, tokenId);
+        uint256 tokenId = totalSupply();
+        _mint(from, to, tokenId);
         _initAttribute(tokenId, from, to, domainId, roundId, reason);
 
         // grant role to 'to' address
@@ -315,9 +317,6 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
     ) internal override {
         bytes32 roleId = keccak256(abi.encodePacked(roleName));
         bytes32 adminRoleId = keccak256(abi.encodePacked(adminRoleName));
-        _setRoleName(roleId, roleName);
-        _setRoleName(adminRoleId, adminRoleName);
-        _setRoleAdmin(roleId, adminRoleId);
         for (uint256 i = 0; i < members.length; i++) {
             // add reputation in the new role and grant role to each member
             if (balanceOf(members[i]) == 0) {
@@ -329,6 +328,9 @@ contract SBRT is ISBRT, SBT721Enumerable, AccessControlPlus, DataURIGen {
             // grant admin role to each member
             _grantRole(adminRoleId, members[i]);
         }
+        _setRoleName(roleId, roleName);
+        _setRoleName(adminRoleId, adminRoleName);
+        _setRoleAdmin(roleId, adminRoleId);
         emit AddedNewRole(roleName, adminRoleName, roleId, adminRoleId, members);
     }
 

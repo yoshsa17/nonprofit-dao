@@ -30,9 +30,9 @@ contract DataURIGen {
         uint256 proposalCount
     ) public pure returns (string memory) {
         // use hsv values to generate a color
-        uint256 val = uint256(keccak256(abi.encodePacked(acceptedBy, tokenId, owner)));
+        // uint256 val = uint256(keccak256(abi.encodePacked(acceptedBy, tokenId, owner)));
 
-        string memory background = genBackgroundSVG(val);
+        string memory background = genBackgroundSVG(reputationCount);
         string memory text = genTextSVG(
             tokenId,
             owner,
@@ -46,16 +46,21 @@ contract DataURIGen {
             proposalCount
         );
 
+        // TODO:: add metadatas
         return
-            Base64.encode(
-                bytes(
-                    string(
-                        abi.encodePacked(
-                            "data:image/svg+xml;base64,",
-                            '<svg class="svgBody" width="300" height="185" viewBox="0 0 300 185" xmlns="http://www.w3.org/2000/svg">',
-                            background,
-                            text,
-                            "</svg>"
+            string(
+                abi.encodePacked(
+                    "data:image/svg+xml;base64,",
+                    Base64.encode(
+                        bytes(
+                            string(
+                                abi.encodePacked(
+                                    '<svg class="svgBody" width="300" height="185" viewBox="0 0 300 185" xmlns="http://www.w3.org/2000/svg">',
+                                    background,
+                                    text,
+                                    "</svg>"
+                                )
+                            )
                         )
                     )
                 )
@@ -65,25 +70,34 @@ contract DataURIGen {
     /**
      * @dev Generates background svg
      */
-    function genBackgroundSVG(uint256 val) public pure returns (string memory) {
-        uint256 h = val % 361;
-        uint256 s = val % 101;
+    function genBackgroundSVG(uint256 reputationCount) public pure returns (string memory) {
+        // uint256 h = val % 361;
+        // uint256 s = (val % 61) + 40;
+        string memory color;
+        if (reputationCount < 5) {
+            color = "#00c000";
+        } else if (reputationCount < 10) {
+            color = "#0022FF";
+        } else if (reputationCount < 15) {
+            color = "#F7FF00";
+        } else if (reputationCount < 20) {
+            color = "#00F7FF";
+        } else {
+            color = "#FFFFFF";
+        }
 
         return
             string(
                 abi.encodePacked(
                     "<defs>"
                     ' <linearGradient id="gradient" x1="0%" y1="0%" x2="0" y2="100%">',
-                    ' <stop offset="0%" style="stop-color:hsl(',
-                    h.toString(),
-                    ", ",
-                    s.toString(),
-                    '%, 50%);stop-opacity:1" />',
-                    ' <stop offset="100%" style="stop-color:light;" />',
+                    ' <stop offset="0%" style="stop-color:',
+                    color,
+                    ';stop-opacity:1" />',
+                    ' <stop offset="100%" style="stop-color:black;" />',
                     " </linearGradient>",
                     " </defs>",
                     ' <rect width="300" height="185" rx="10" fill="url(#gradient)" />',
-                    ' <rect width="300" height="185" rx="10" style="fill: black" opacity="0.3"/>',
                     ' <rect x="5" y="5" width="290" height="175" rx="10" fill="transparent" stroke="white" opacity="0.8" />',
                     ' <rect x="14" y="170" rx="3" width="42" height="13" fill="black"  />'
                 )
@@ -154,16 +168,16 @@ contract DataURIGen {
         return
             string(
                 abi.encodePacked(
-                    ' <text x="20" y="90" class="tiny" fill="white" >Reputation: ',
+                    ' <text x="20" y="90" class="tiny" fill="white" >Reputations: ',
                     reputationCount.toString(),
                     "</text>",
-                    '<text x="20" y="100" class="tiny" fill="white" >Evaluation: ',
+                    '<text x="20" y="100" class="tiny" fill="white" >Evaluations: ',
                     evaluationCount.toString(),
                     "</text>",
-                    '<text x="20" y="110" class="tiny" fill="white" >Voting: ',
+                    '<text x="20" y="110" class="tiny" fill="white" >Votings: ',
                     votingCount.toString(),
                     "</text>",
-                    '<text x="20" y="120" class="tiny" fill="white" >Proposal Submission: ',
+                    '<text x="20" y="120" class="tiny" fill="white" >Proposal Submissions: ',
                     proposalCount.toString(),
                     "</text>"
                 )

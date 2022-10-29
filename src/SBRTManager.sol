@@ -4,7 +4,6 @@ pragma solidity ^0.8.13;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/Timers.sol";
-// import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "./interfaces/ISBRTManager.sol";
 import "./base//AccessControlPlus.sol";
 import "./base/EvaluationSettings.sol";
@@ -94,11 +93,11 @@ contract SBRTManager is ISBRTManager, SBRT, EvaluationSettings {
         address[] calldata contributors,
         string[] calldata reasons
     ) external returns (bool) {
-        // Check if round is currently in progress
+        // Check if the round is currently in progress
         require(_stateOf(roundId) == State.IN_PROGRESS, "SBRTManager:: The round is not in progress");
         // Check if the caller is an evaluator(member of the domain)
         require(
-            hasRole(this.getRoundDomainId(roundId), _msgSender()),
+            hasRole(this.getRoundDomainId(roundId), _msgSender()) || getMemberRoleCount(_msgSender()) > 0,
             "SBRTManager:: Only domain members can evaluate"
         );
         // Check if the caller has already evaluated
@@ -122,7 +121,7 @@ contract SBRTManager is ISBRTManager, SBRT, EvaluationSettings {
     }
 
     function setEvaluationRound(bytes32 domainId, uint64 startBlock) external onlyRole(GOVERNOR) returns (bool) {
-        require(roleExists(domainId), "SBRTManager: Domain does not exist");
+        require(roleExists(domainId) || domainId == bytes32(0), "SBRTManager: Domain does not exist");
 
         // Registers a new evaluation round
         _evaluationRoundCount.increment();
@@ -132,7 +131,7 @@ contract SBRTManager is ISBRTManager, SBRT, EvaluationSettings {
         e.startBlock.setDeadline(startBlock);
         e.endBlock.setDeadline(endBlock);
         e.domainId = domainId;
-        emit SetEvaluationRound(_evaluationRoundCount.current(), startBlock, endBlock);
+        emit SetEvaluationRound(domainId, _evaluationRoundCount.current(), startBlock, endBlock);
         return true;
     }
 

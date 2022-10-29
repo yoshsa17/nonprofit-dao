@@ -7,7 +7,7 @@ import "./ISBRT.sol";
  * @title ISBRT Manager contract
  */
 interface ISBRTManager is ISBRT {
-    event SetEvaluationRound(uint256 roundId, uint64 startBlock, uint64 endBlock);
+    event SetEvaluationRound(bytes32 domainId, uint256 roundId, uint64 startBlock, uint64 endBlock);
 
     function isEvaluator(bytes32 domainId, address account) external view returns (bool);
 
