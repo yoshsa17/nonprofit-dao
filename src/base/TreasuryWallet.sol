@@ -13,12 +13,8 @@ contract TreasuryWallet is ITreasuryWallet, Context {
     // Static functions
     // --------------------------------------------------------------
 
-    function getWalletBalance() external view returns (uint256) {
-        return address(this).balance;
-    }
-
     function getDomainAllowance(bytes32 domainId) external view returns (uint256) {
-        return _domainAllowances[domainId];
+        return domainId == bytes32(0x00) ? address(this).balance : _domainAllowances[domainId];
     }
 
     function checkDomainAllowance(bytes32 domainId, uint256[] memory values) external view returns (bool) {
@@ -38,8 +34,13 @@ contract TreasuryWallet is ITreasuryWallet, Context {
 
     receive() external payable {
         if (msg.value > 0) {
-            emit EtherDeposited(_msgSender(), msg.value);
+            emit EtherDeposited(_msgSender(), "");
         }
+    }
+
+    function depositEth(string memory reason) external payable {
+        require(msg.value > 0, "TreasuryWallet: donate amount must be greater than 0");
+        emit EtherDeposited(_msgSender(), reason);
     }
 
     function approveToDomain(bytes32 domainId, uint256 amount) external {

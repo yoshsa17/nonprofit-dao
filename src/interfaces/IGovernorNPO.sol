@@ -25,13 +25,12 @@ interface IGovernorNPO is ITreasuryWallet {
         For,
         Abstain
     }
-
     event ProposalCreated(
         uint256 proposalId,
+        bytes32 domainId,
         address proposer,
         address[] targets,
         uint256[] values,
-        string[] signatures,
         bytes[] calldatas,
         uint256 startBlock,
         uint256 endBlock,

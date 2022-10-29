@@ -8,11 +8,9 @@ import "@openzeppelin/contracts/utils/Context.sol";
  */
 interface ITreasuryWallet {
     event EtherSent(address to, uint256 amount, string reason);
-    event EtherDeposited(address from, uint256 amount);
+    event EtherDeposited(address from, string reason);
     event ApprovedToDomain(bytes32 domainId, uint256 amount);
     event RevokedDomainAllowance(bytes32 domainId);
-
-    function getWalletBalance() external view returns (uint256);
 
     function getDomainAllowance(bytes32 domainId) external view returns (uint256);
 

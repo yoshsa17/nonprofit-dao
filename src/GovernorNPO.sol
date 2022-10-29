@@ -143,10 +143,10 @@ contract GovernorNPO is IGovernorNPO, GovernorSettings, TreasuryWallet {
         proposal.domainId = domainId;
         emit ProposalCreated(
             proposalId,
+            domainId,
             proposer,
             targets,
             values,
-            new string[](targets.length),
             calldatas,
             snapshot,
             deadline,
@@ -231,7 +231,7 @@ contract GovernorNPO is IGovernorNPO, GovernorSettings, TreasuryWallet {
         manager = ISBRTManager(managerAddress);
         _isInitialized = true;
     }
-
+     
     // function _quorumReached(uint256 proposalId) internal view virtual override returns (bool) {
     //     Proposal storage proposalvote = _proposals[proposalId];
     //     return proposalSnapshot(proposalId)) <= proposalvote.forVotes + proposalvote.abstainVotes;
