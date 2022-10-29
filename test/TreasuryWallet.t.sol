@@ -24,7 +24,7 @@ contract TreasuryWalletTest is Test {
         vm.prank(donor);
         (bool ok, ) = payable(governor).call{value: 1 ether}("");
         assertTrue(ok);
-        assertEq(governor.getWalletBalance(), 1 ether);
+        assertEq(governor.getDomainAllowance(bytes32(0x00)), 1 ether);
     }
 
     function testApproveFunds() public {

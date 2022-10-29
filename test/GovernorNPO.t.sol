@@ -42,6 +42,31 @@ contract GovernorNPOFixture is Test {
     }
 }
 
+contract ProposeTest is GovernorNPOFixture {
+    address[] targets;
+    uint256[] values;
+    bytes[] calldatas;
+    string description;
+    uint256 proposalId;
+
+    function setUp() public override {
+        super.setUp();
+        targets = [member2];
+        values = [2 ether];
+        calldatas = [abi.encodePacked("")];
+        description = "# Send 2 ether to member 2";
+    }
+
+    function testPropose() public {
+        vm.prank(member1);
+        governor.propose(MAIN_DOMAIN_ID, targets, values, calldatas, description);
+
+        bytes32 descriptionHash = bytes32(keccak256(abi.encodePacked(description)));
+        proposalId = uint256(keccak256(abi.encode(targets, values, calldatas, descriptionHash)));
+        governor.state(proposalId);
+    }
+}
+
 contract VotingTest is GovernorNPOFixture {
     bytes4 FUNC_SELECTOR = bytes4(keccak256("targetFunction(uint256)"));
     address[] targets;
